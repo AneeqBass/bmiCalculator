@@ -1,18 +1,25 @@
-let age = document.querySelector('#age')
-let male = document.querySelector('#male')
-let female = document.querySelector('#female')
-let height = document.querySelector('#height')
-let weight = document.querySelector('#weight')
-let calculateBtn = document.querySelector('#calculateBtn')
-let answer = document.querySelector('#answer')
+document.getElementById('bmiForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    let height = parseFloat(document.getElementById('height').value) / 100; // Convert height to meters
+    let weight = parseFloat(document.getElementById('weight').value);
+    
+    if (height > 0 && weight > 0) {
+        let bmi = (weight / (height * height)).toFixed(2);
+        let category = '';
 
-function calculation(){
-    if (age < 17 || age > 66){
-        answer = weight/ (height*height)
-     
+        if (bmi < 18.5) {
+            category = 'Underweight';
+        } else if (bmi >= 18.5 && bmi < 24.9) {
+            category = 'Normal weight';
+        } else if (bmi >= 25 && bmi < 29.9) {
+            category = 'Overweight';
+        } else {
+            category = 'Obesity';
+        }
+
+        document.getElementById('result').textContent = `Your BMI is ${bmi} (${category})`;
+    } else {
+        document.getElementById('result').textContent = 'Please enter valid height and weight values.';
     }
-}
-
-calculateBtn.addEventListener("click",()=>{
-    answer.innerText = calculation()
-})
+});
